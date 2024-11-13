@@ -10,7 +10,7 @@ export const productCart=createSlice({
     initialState,
     reducers:{
         addProduct:(state,action)=>{
-            const existingItem = state.cart.find(item => item.id === action.payload.id);
+            const existingItem = state.cart.find(item => item.id === action.payload);
             if (!existingItem) {
                 state.cart.push(action.payload);
             }
@@ -20,11 +20,22 @@ export const productCart=createSlice({
         },
 
         addMore:(state,action)=>{
-            state.sameitemcart.push(action.payload)
+            const product=state.sameitemcart.find((item)=>item.id===action.payload)
+            if(product){
+                product.length+=1
+            }else{
+                state.sameitemcart.push(action.payload)
+            }
         },
 
         removeitemfromaddMore:(state,action)=>{
-            state.sameitemcart=state.sameitemcart.filter((item)=>item.id!==action.payload)
+            const getProducts=state.sameitemcart.filter((item)=>item.id===action.payload)
+            // state.sameitemcart=state.sameitemcart.filter((item)=>item.id!==action.payload)
+            if(getProducts.length>0){
+                state.sameitemcart.pop(getProducts)
+            }else{
+                state.sameitemcart=[]
+            }
         }
 
 
