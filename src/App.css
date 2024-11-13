@@ -1,0 +1,264 @@
+*{
+    padding:0;
+    margin:0;
+    box-sizing: border-box;
+
+}
+.mainBody{
+    display:flex;
+    flex-direction: row;
+    gap:20px;
+    padding-top:90px;
+}
+.cartImage{
+    height:200px;
+    width:200px;
+    border-radius: 10px;
+}
+.cartBody{
+    /* padding-top: 90px; */
+    display: flex;
+    flex-direction: row;
+    gap:10px;
+    margin:10px;
+    
+
+}
+.cartmaindisplay{
+    padding-top: 85px;
+    display: flex;
+    flex-direction: row;
+    /* gap:0px; */
+    justify-content:flex-start;
+    
+
+}
+
+.cartBodyChild{
+    display:flex;
+    flex-direction: row;
+    gap:10px;
+    box-shadow:5px 5px 10px gray;
+    padding:8px;
+    border-radius: 10px;
+    max-width:700px;
+    width:99%;
+}
+.cartInfoClass{
+    max-width:400px;
+    width:99%;
+    height:99%;
+    max-height:500px;
+    position:fixed;
+    right:10px;
+    border-radius:20px;
+    box-shadow: 10px 10px 30px gray;
+    padding:20px;
+}
+.cartImageinCart{
+    height:150px;
+    width:150px;
+    border-radius:8px;
+}
+.firstChild{
+    max-width:250px;
+    width:99%;
+    padding-left:40px;
+}
+.emptyCart{
+    display:flex;
+    justify-content: center;
+    align-content: center;
+    
+}
+.emptycartImage{
+    height:400px;width:400px;
+}
+.cardBlock{
+    display:flex;
+    flex-direction: row;
+    gap:20px;
+    flex-wrap: wrap;
+    overflow-y: auto;
+    height:500px;
+    overflow-x:hidden;
+
+}
+.leftCartInfo{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.leftcartchild{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.leftcartchild h6:nth-child(2){
+    background-color: rgb(224, 210, 210);
+    padding:4px 10px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.imageTitle{
+    width:99%;
+    max-width:200px;
+}
+.cartCountInNotifi{
+    position:relative;
+}
+.notificartChild{
+    position: absolute;
+    top:0px;
+    padding:1px 6px;
+    border-radius:8px;
+    font-size: 14px;
+    left:22px;
+    background-color: green;
+    color:white;
+    justify-content: center;
+    align-items: center;
+}
+.navul{
+    display:flex;
+    flex-direction:row;
+    text-decoration:none;
+    gap:10px;
+    list-style-type: none;
+    background-color: aquamarine;
+    position: fixed;
+    z-index:100;
+    width:100%;
+    justify-content: space-between;
+    padding:20px;
+    font-size:25px;
+}
+.navulChild,.priceCartInfo{
+    display:flex;
+    flex-direction: row;
+    gap:20px;
+}
+.filterSection{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-content:baseline;
+    justify-content: space-between;
+}
+
+.sortButton{
+    outline:none;
+    box-shadow:none;
+    background:transparent;
+    border: none;
+
+}
+.firstChildmatter{
+    display:flex;
+    flex-direction:row;
+    gap:10px;
+    padding-top:1px;
+    margin:10px;
+}
+.Info .des{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.Info{
+    overflow-y:auto;
+    height:480px;
+    overflow-x:hidden;
+}
+.productDisplayBoard{
+    display:flex;
+    flex-direction: row;
+    gap:10px;
+    
+    padding-top:80px;
+}
+/* In your CSS file */
+.no-underline {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+.firstfirstChild{
+    max-width:900px;
+    width:99%;
+    padding:20px;
+    box-shadow:1px 1px 10px gray;
+}
+
+.secondRow{
+    max-width:350px;
+    width:99%;
+    overflow-y:auto;
+    overflow-x:hidden;
+    text-align: justify;
+    padding:10px;
+    height:500px;
+    
+}
+.firstChildImage{
+    width:350px;
+height:350px;
+}
+.mainprodis{
+    display:flex;
+    flex-direction: row;
+    gap:4px;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    
+}
+.imageinsinglepro{
+    height:80px;
+    padding:5px;
+    width:80px;
+    border-radius: 10px;
+}
+.imageCard{
+    padding:10px;
+    margin:4px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* animation: imageCardAnim 2s ; */
+    
+}
+.addRemoveBut{
+    outline:none;
+    box-shadow:none;
+    border:none;
+    background-color: aquamarine;
+    padding:4px 50px;
+    max-width:200px;
+    width:99%;
+    
+    border-radius: 6px;
+    /* margin:1px; */
+}
+.imageCard:hover{
+    box-shadow:1px 1px 10px gray;
+    transition:0.125s all;
+    border-radius: 4px;
+    background-color: aquamarine;
+    border:2px solid rgb(20, 253, 3);
+    animation: imageCardAnim 1s ;
+}
+
+@keyframes imageCardAnim {
+    from{
+        opacity:0;
+        transition:translate(0%,40%)
+    }
+    to{
+        opacity:1;
+        transition: scale(0);
+    }
+}
+.tableprop{
+    border:1px solid black;
+    padding-top:100px;
+}
