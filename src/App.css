@@ -123,14 +123,27 @@
 }
 .cartCountInNotifi{
     position:relative;
+    cursor: pointer;
 }
 .notificartChild{
     position: absolute;
     top:0px;
-    padding:1px 6px;
+    padding:0px 6px;
     border-radius:8px;
     font-size: 14px;
     left:22px;
+    background-color: green;
+    color:white;
+    justify-content: center;
+    align-items: center;
+}
+.notifilikecount{
+    position: absolute;
+    top:0px;
+    padding:0px 6px;
+    border-radius:8px;
+    font-size: 14px;
+    left:10px;
     background-color: green;
     color:white;
     justify-content: center;
@@ -150,15 +163,47 @@
     padding:20px;
     font-size:25px;
 }
-.navulChild,.priceCartInfo{
+.forsecondblocknavs{
+    display:flex;
+    flex-direction: row;
+    gap:30px;
+}
+.navulChild{
     display:flex;
     flex-direction: row;
     gap:20px;
+    
+}
+.childpriceInfo,.catfilterchilds,.allcatfilter{
+    display:flex;
+    flex-direction: row;
+    gap:10px;
+    padding:10px;
+}
+.priceCartInfo{
+    display:flex;
+    flex-direction: row;
+    gap:10px;
+    padding-top:5px;
+}
+.forPricefilters{
+    display:flex;
+    flex-direction: column;
+    gap:0px;
+    /* padding:10px; */
+    
+}
+.catFilters{
+    display:flex;
+    flex-direction: column;
+    gap:10px;
+    
 }
 .filterSection{
     display: flex;
     flex-direction: row;
     align-items: center;
+    gap:10px;
     align-content:baseline;
     justify-content: space-between;
 }
@@ -234,12 +279,30 @@ height:350px;
 }
 .imageCard{
     padding:10px;
+    position:relative;
     margin:4px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     /* animation: imageCardAnim 2s ; */
     
+}
+.mainLikeButton{
+    border:none;
+    outline:none;
+    background: transparent;
+}
+.forLikeButton{
+    position:absolute;
+    background-color: white;
+    filter:drop-shadow(1px 1px 1px gray);
+    right:0;
+    top:0;
+    padding:4px 8px;
+    border:none;
+    outline:none;
+    border-radius:15px;
+    cursor: pointer;
 }
 .addRemoveBut{
     outline:none;
@@ -283,8 +346,8 @@ height:350px;
     flex-wrap: wrap;
     gap:20px;
     justify-content:center;
-    align-items: center;
-    align-content: flex;
+    align-items: flex-end;
+   
 }
 .addRemoveButsinglepro{
     /* outline:none; */
@@ -335,3 +398,116 @@ height:350px;
     width:99%;
     justify-content: space-between;
 }
+.likep{
+    display:flex;
+    flex-direction: row;
+    gap:2px;
+    height:99%;
+    padding:10px;
+    max-height:190px;
+}
+.likeprice,.likepdes,.likedpcat{
+    font-size:12px;
+    margin:0;
+}
+.liedpinfo{
+    display:flex;
+    flex-direction: column;
+    max-height:100px;
+    height:99%;
+    gap:2px;
+    
+}
+.likeptitle{
+    font-size:13px;
+    width:99%;
+    max-width:200px;
+    padding-top:10px;
+}
+.cartInfocard{
+    border:none;
+    cursor: pointer;
+    outline:none;
+    background:coral;
+    border-radius: 15px;
+    padding:5px;
+}
+.likedproductimage{
+    height:100px;
+    width:100px;
+    border-radius: 15px;
+}
+.forlikesModal{
+    position:absolute;
+    z-index:2;
+    /* left:100px; */
+    right:0px;
+    /* top:60px; */
+    height:300px;
+    width:300px;
+    filter:drop-shadow(1px 1px 6px gray);
+    border-radius: 15px;
+    background-color: white;
+    overflow-y:auto;
+    overflow-x:hidden;
+    animation:likesmodal forwards 0.12s ease-in-out; 
+    
+}
+.nothingtodisplay{
+    display:'flex';
+    justify-content:'center';
+    margin-top:100px;
+    filter:drop-shadow(1px 1px 5px red);
+}
+.titlepoplikedtext{
+    font-size: 12px;
+    
+
+}
+.titlepopover{
+    position:absolute;
+    background-color: black;
+    color:white;
+    border-radius:10px;
+    display:flex;
+    width:100px;
+    padding:10px;
+    justify-content: center;
+    align-items: center;
+    right:10px;
+    animation:likesmodal 0.3s ease-in-out alternate;
+    
+   
+}
+    
+    
+.gotocartBut1{
+    outline:none;
+    box-shadow: none;
+    border:none;
+    position: relative;
+    left:100px;
+    background-color: rgb(157, 232, 91);
+    padding:4px 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    
+    border-radius:15px;
+    margin:1px;
+}
+    
+
+
+@keyframes likesmodal {
+    from{
+        opacity:0;
+        transition:translate(0%,40%)
+    }
+    to{
+        opacity:1;
+        transition: scale(1);
+    }
+}
+    

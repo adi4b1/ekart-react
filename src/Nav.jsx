@@ -2,14 +2,32 @@ import { Link } from "react-router-dom"
 
 
 import { useSelector } from "react-redux"
+import { useState } from "react"
+import Likedproducts from "./Likedproducts"
 
 
 
 const Nav = () => {
+    const [likemodal, setlikemodal] = useState(false)
     const count = useSelector((state) => state.addCart.cart.length)
+    const getlikeproducts = useSelector((state) => state.addCart.likes)
+
+    const[mover,setmover]=useState(false)
+
+    // console.log('length',getlikeproducts.length);
+    const handleModalOpen = () => {
+        setlikemodal(!likemodal)
+    }
+
+    const mouseover=()=>{
+        setmover(true)
+    }
+    const mouseleave=()=>{
+        setmover(false)
+    }
     return (
         <>
-            <div>
+            <div style={{ position: 'relative' }}>
                 <ul className="navul">
                     <div className="navulChild">
                         <Link to="/" className="no-underline">
@@ -17,11 +35,36 @@ const Nav = () => {
                         </Link>
 
                     </div>
-                    <li>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314" />
-                        </svg> &nbsp;likes
-                    </li>
+                    <div className="forsecondblocknavs">
+
+                   
+                    <div className="cartCountInNotifi">
+                        <li onClick={handleModalOpen}
+                        onMouseLeave={mouseleave}
+                        onMouseEnter={mouseover}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" className="bi bi-heart" viewBox="0 0 16 16">
+                                <path fillRule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314" />
+                            </svg>
+
+                            <div className="notifilikecount">
+                                <small>{getlikeproducts.length > 9 ? (`9⁺`) : (getlikeproducts.length)}
+                                </small>
+                            </div>
+                            {mover&&(
+                                <div className="titlepopover">
+                                    <small className="titlepoplikedtext">Liked Products</small>
+                                </div>
+                            )}
+
+                            {likemodal && (
+                                <div className="forlikesModal">
+                                    {/* liked products components */}
+                                    <Likedproducts />
+                                </div>
+                            )}
+                        </li>
+                    </div>
+
                     <Link to="/cart" className="no-underline">
                         <div className="cartCountInNotifi">
                             <li>&nbsp; <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-cart" viewBox="0 0 16 16">
@@ -33,6 +76,7 @@ const Nav = () => {
                         </div>
 
                     </Link>
+                    </div>
                 </ul>
             </div>
         </>

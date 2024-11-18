@@ -2,7 +2,8 @@ import {createSlice} from '@reduxjs/toolkit'
 
 const initialState={
     cart:[],
-    sameitemcart:[]
+    sameitemcart:[],
+    likes:[]
 }
 
 export const productCart=createSlice({
@@ -36,6 +37,18 @@ export const productCart=createSlice({
             }else{
                 state.sameitemcart=[]
             }
+        },
+
+        likeproduct:(state,action)=>{
+            const check=state.likes.find(item=>item.id===action.payload)
+            if(!check){
+                state.likes.push(action.payload)
+            }
+        },
+
+        dislikeproduct:(state,action)=>{
+            state.likes=state.likes.filter(item=>item.id!==action.payload)
+            
         }
 
 
@@ -44,6 +57,8 @@ export const productCart=createSlice({
 })
 
 
-export const{addProduct,removeProduct,addMore,removeitemfromaddMore}=productCart.actions
+export const{addProduct,removeProduct,addMore,removeitemfromaddMore,
+    likeproduct,dislikeproduct
+}=productCart.actions
 
 export default productCart.reducer

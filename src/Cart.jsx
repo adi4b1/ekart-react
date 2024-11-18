@@ -70,17 +70,22 @@ const Cart = () => {
             </div>
           );
         }) : <EmptyCart />}
-        {cartItems.length < 1 ? (
-          <Link to="/"><h4>Go to Products</h4></Link>
-        ) : ''}
-      </div>
-      <div className="cartInfoClass card">
         <div>
-          <h5>CartItems({cartItems.length})</h5>
-
-          <h6>Total : Rs {parseInt(totalCostForSameProduct)}</h6>
+          {cartItems.length < 1 ? (
+            <Link to="/" className="no-underline" ><button align="center" className="gotocartBut1">Go to Products</button></Link>
+          ) : ''}
         </div>
       </div>
+      {cartItems.length > 0 ? (
+        <div className="cartInfoClass card">
+          <div>
+            <h5>CartItems({cartItems.length})</h5>
+
+            <h6>Total : Rs {parseInt(totalCostForSameProduct)}</h6>
+          </div>
+        </div>
+      ) : ''}
+
     </div>
   );
 };

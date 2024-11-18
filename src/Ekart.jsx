@@ -1,10 +1,15 @@
 import React, { useEffect, useReducer, useState } from "react";
 import { Link } from "react-router-dom";
-import { useSelector,useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import { toast } from 'react-toastify';
 
-import { addProduct ,removeProduct} from "./Redux/cartSlice";
+import {
+  addProduct, removeProduct,
+  likeproduct, dislikeproduct
+
+} from "./Redux/cartSlice";
+import EmptyCart from "./EmptyCart";
 const reducerHandler = (state, action) => {
   switch (action.type) {
     case "load":
@@ -36,12 +41,14 @@ const Ekart = () => {
 
   // const[cartItem,setcartItem]=useState([])
 
-  const dis=useDispatch()
+  const dis = useDispatch()
 
-  const addToCart=useSelector((state)=>state.addCart.cart)
-  const addCartPrices=addToCart.reduce((acc,curr)=>acc+curr.price,0)
-  
-// console.log(addCartPrices);
+  const addToCart = useSelector((state) => state.addCart.cart)
+  const addCartPrices = addToCart.reduce((acc, curr) => acc + curr.price, 0)
+
+
+  const getlikes = useSelector((state) => state.addCart.likes)
+  console.log('getlikes', getlikes);
 
   // const addCartHandler=()=>{
   //   dis(addProduct())
@@ -69,9 +76,8 @@ const Ekart = () => {
       const API =
         radio === "all"
           ? `https://fakestoreapi.com/products?sort=${asc ? "asc" : "desc"}`
-          : `https://fakestoreapi.com/products/category/${radio}?sort=${
-              asc ? "asc" : "desc"
-            }`;
+          : `https://fakestoreapi.com/products/category/${radio}?sort=${asc ? "asc" : "desc"
+          }`;
       const data = await fetch(API);
       const changeData = await data.json();
 
@@ -111,10 +117,15 @@ const Ekart = () => {
 
 
 
-  const handleAddcart=(item)=>{
+  const handleAddcart = (item) => {
     dis(addProduct(item))
     toast.success(`${item.title} is added to cart!😀`);
   }
+
+  // const dislikesingleproduct=(item)=>{
+  //   dis(dislikeproduct(item.id))
+  //   toast.warning(`you disliked ${item.title}`)
+  // }
   return (
     <div>
       {ekartState.error && <p>getting error check network</p>}
@@ -153,7 +164,7 @@ const Ekart = () => {
               )}
             </button>
           </div>
-          <div>
+          <div className="allcatfilter">
             <input
               type="radio"
               name="category"
@@ -166,54 +177,61 @@ const Ekart = () => {
           {categories.map((i, index) => {
             // <input type="radio" />All
             return (
-              <div key={index}>
-                <input
-                  type="radio"
-                  value={i}
-                  checked={radio === i}
-                  name="category"
-                  onChange={handleRadioValue}
-                />
-                {i}
+              <div key={index} className="catFilters">
+                <div className="catfilterchilds">
+                  <input
+                    type="radio"
+                    value={i}
+                    checked={radio === i}
+                    name="category"
+                    onChange={handleRadioValue}
+                  />
+                  <small>{i}</small>
+                </div>
               </div>
             );
           })}
           <div>
-            
-            <br />
+
+            {/* <br /> */}
             <div>
               <h5>Prices</h5>
-              <input
-                type="radio"
-                onChange={priceHandler}
-                value={50}
-                checked={radioPrice === 50}
-                name="priceValue"
-              />
-              <span>{">"}50</span>
-              <br />
+              <div className="forPricefilters">
+                <div className="childpriceInfo">
+                  <input
+                    type="radio"
+                    onChange={priceHandler}
+                    value={50}
+                    checked={radioPrice === 50}
+                    name="priceValue"
+                  />
+                  <span>{">"}50</span>
+                </div>
+                <div className="childpriceInfo">
+                  <input
+                    type="radio"
+                    onChange={priceHandler}
+                    value={100}
+                    name="priceValue"
+                    checked={radioPrice === 100}
+                  />
+                  <span>{">"}100</span>
+                </div>
+                <div className="childpriceInfo">
+                  <input
+                    type="radio"
+                    onChange={priceHandler}
+                    value={1000}
+                    name="priceValue"
+                    checked={radioPrice === 1000}
+                  />
+                  <span>{">"}1000</span>
+                </div>
 
-              <input
-                type="radio"
-                onChange={priceHandler}
-                value={100}
-                name="priceValue"
-                checked={radioPrice === 100}
-              />
-              <span>{">"}100</span>
-              <br />
-
-              <input
-                type="radio"
-                onChange={priceHandler}
-                value={1000}
-                name="priceValue"
-                checked={radioPrice === 1000}
-              />
-              <span>{">"}1000</span>
+              </div>
             </div>
-            <br />
-            <h5>CartInfo</h5>
+          <hr />
+            {/* <h5>CartInfo</h5> */}
             <div className="leftCartInfo">
               <div className="leftcartchild">
                 <h6>Products</h6>
@@ -223,35 +241,75 @@ const Ekart = () => {
                 <h6>Total</h6>
                 <h6><strong>{parseInt(addCartPrices)}</strong></h6>
               </div>
-        
+
             </div>
           </div>
         </div>
 
         <div>
+
+
           <h5>Products</h5>
-        <div className="cardBlock">
-          {ekartState.load && (
-            <div className="d-flex justify-content-center">
-              <div className="spinner-border" role="status">
-                <span className="visually-hidden">Loading...</span>
+
+
+          <div className="cardBlock">
+            {ekartState.load && (
+              <div className="d-flex justify-content-center">
+                <div className="spinner-border" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </div>
               </div>
-            </div>
-          )}
-          {!ekartState.load && ekartState.data && (
-            <>
-              {getPriceproducts.map((item, index) => {
-                const inCart=addToCart.some((product)=>product.id===item.id)
-                return (
-                  <div key={index} className="imageCard">
-                    <Link to={`/products/${item.id}`} className="no-underline">
-                      <img src={item.image} alt="pic" className="cartImage" />
+            )}
+            {!ekartState.load && ekartState.data && (
+              <>
+                {getPriceproducts.map((item, index) => {
+                  const inCart = addToCart.some((product) => product.id === item.id)
+
+                  const checkLikeorNot = getlikes.some((product) => product.id === item.id)
+                  console.log('c', checkLikeorNot);
+                  return (
+                    <div key={index} className="imageCard">
+                      <Link to={`/products/${item.id}`} className="no-underline">
+                        <img src={item.image} alt="pic" className="cartImage" />
+                        <div className="forLikeButton">
+                          {checkLikeorNot ? (
+                            <button className="mainLikeButton" onClick={(e) => {
+                              dis(dislikeproduct(item.id))
+                              e.preventDefault()
+                              e.stopPropagation()
+                              toast.info(`you disliked ${item.title}`)
+                            }}>
+
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" className="bi bi-heart-fill" viewBox="0 0 16 16">
+                                <path fillRule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314" />
+                              </svg>
+                            </button>
+
+                          ) : (
+
+                            <button className="mainLikeButton" onClick={(e) => {
+                              dis(likeproduct(item))
+                              e.preventDefault()
+                              e.stopPropagation()
+                              toast.success(`you liked ${item.title}`)
+                            }}>
+
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-heart" viewBox="0 0 16 16">
+                                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
+                              </svg>
+                            </button>
+
+
+
+                          )}
+
+                        </div>
                       </Link>
                       <div className="imageTitle">
                         <small>
-                          <b>{item.title}</b>
+                          <b>{item.title.substr(0,50)}</b>
                         </small>
-                    
+
                         <br />
                         <small>
                           <svg
@@ -282,24 +340,24 @@ const Ekart = () => {
                             </svg>{" "}
                             &nbsp;{item.price}
                           </small>
-                       
+
                         </div>
-                        {inCart?( <button className="addRemoveBut" onClick={()=>dis(removeProduct(item.id))}><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-cart-dash" viewBox="0 0 16 16">
-  <path d="M6.5 7a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1z"/>
-  <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zm3.915 10L3.102 4h10.796l-1.313 7zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/>
-</svg> &nbsp;Product</button>)
-                        :(<button className="addRemoveBut" onClick={()=>handleAddcart(item)}><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-cart-check" viewBox="0 0 16 16">
-                        <path d="M11.354 6.354a.5.5 0 0 0-.708-.708L8 8.293 6.854 7.146a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0z"/>
-                        <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zm3.915 10L3.102 4h10.796l-1.313 7zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/>
-                      </svg> &nbsp;Cart</button>)}    
+                        {inCart ? (<button className="addRemoveBut" onClick={() => dis(removeProduct(item.id))}><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-cart-dash" viewBox="0 0 16 16">
+                          <path d="M6.5 7a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1z" />
+                          <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zm3.915 10L3.102 4h10.796l-1.313 7zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
+                        </svg> &nbsp;Product</button>)
+                          : (<button className="addRemoveBut" onClick={() => handleAddcart(item)}><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-cart-check" viewBox="0 0 16 16">
+                            <path d="M11.354 6.354a.5.5 0 0 0-.708-.708L8 8.293 6.854 7.146a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0z" />
+                            <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zm3.915 10L3.102 4h10.796l-1.313 7zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
+                          </svg> &nbsp;Cart</button>)}
                       </div>
-                    
-                  </div>
-                );
-              })}
-            </>
-          )}
-        </div>
+
+                    </div>
+                  );
+                })}
+              </>
+            )}
+          </div>
         </div>
       </div>
     </div>

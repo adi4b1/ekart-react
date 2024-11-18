@@ -5,9 +5,9 @@ import {Routes,Route} from 'react-router-dom'
 import './App.css'
 import Nav from "./Nav"
 import Apireducer from '../src/context/Apireducer'
-import Usersall from '../src/context/Usersall'
+// import Usersall from '../src/context/Usersall'
 import Productpage from "./Productpage"
-import Users from "./Users"
+// import Users from "./Users"
 import Cart from "./Cart"
 
 
@@ -18,19 +18,32 @@ const App=()=>{
   return(
     <div>
       <Apireducer>
-      <Usersall>
+      {/* <Usersall> */}
       <Nav/>
-      <ToastContainer />
+      <ToastContainer 
+      position="top-center"
+      autoClose={3000}
+      // hideProgressBar={false}
+      hideProgressBar
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="dark"
+      transition: Bounce
+      />
       <Routes>
         <Route path="/" element={<Ekart/>}/>
         <Route path="/products/:cartId" element={<Productpage/>}/>
-        <Route path="/users" element={<Users/>}/>
+        {/* <Route path="/users" element={<Users/>}/> */}
         <Route path="/cart" element={<Cart/>}/>
       </Routes>
       {/* <Ekart/> */}
 
       {/* ////routes */}
-      </Usersall>
+      {/* </Usersall> */}
       </Apireducer>
 
     </div>
